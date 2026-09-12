@@ -1,6 +1,6 @@
 import Foundation
 
-// Transactional NODO recovery, not a disaster-recovery snapshot of nodo-optional.
+// Transactional NODO recovery, not a disaster-recovery snapshot of Efrecord.
 // Keep exact bridge-owned state; never recursively select the shared plugin dir.
 let nodoBridgeBackupFiles = [
  "state.json", "state.json.bak", "chat-sessions.json", "send-ledger.jsonl",
@@ -12,7 +12,11 @@ func nodoBackupScope(data:URL,userHome:URL) throws -> [URL] {
  let manager=FileManager.default
  let bridge=userHome.appendingPathComponent(".dsh/plugins/telegram-bridge")
  let observer=userHome.appendingPathComponent(".dsh/plugins/sessions-observer")
- var roots=[data]
+ // The running installer and its log live in updates/. This is a disposable
+ // download/staging cache, not user state. Include every other top-level entry,
+ // including unknown future persistent files, instead of maintaining an allowlist.
+ var roots=try manager.contentsOfDirectory(at:data,includingPropertiesForKeys:nil)
+  .filter{$0.lastPathComponent != "updates"}.sorted{$0.path<$1.path}
  for file in nodoBridgeBackupFiles {
   let url=bridge.appendingPathComponent(file)
   if manager.fileExists(atPath:url.path) {

@@ -1,6 +1,6 @@
 {
   "name": "nodo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "NODO local agent workspace for macOS",
   "main": "main.cjs",

@@ -9,7 +9,7 @@
   },
   {
     "path": "package.json",
-    "sha256": "f4df92cb9f00dfd2f09c158b46fee769e718d46b17544d4fa51e8e2a034a36a8"
+    "sha256": "502b8ac220e37cf73b19e6772f88d902bde169db2313d94252ed8f67b2ce772b"
   },
   {
     "path": "build-mode.json",
@@ -365,7 +365,7 @@
   },
   {
     "path": "rescue/BackupScope.swift",
-    "sha256": "b8fc589bacb7f7f63589102f26a5698dca8e2b65d3d5c3302340a470f51c49ee"
+    "sha256": "619215ad2ccd8892f5c573e2f273043c42f5d9bf54781c02812cee05d23f1572"
   },
   {
     "path": "rescue/README.md",
@@ -393,7 +393,7 @@
   },
   {
     "path": "tests/backup-scope-fixture.swift",
-    "sha256": "f9cd74eec828098250422bcb8a5c95b214c3db3c9c795644e1bd6787746daf22"
+    "sha256": "ddc10a496197b11c426d2c6fffa19fa52c9da0b453a2184835ae9b043265705d"
   },
   {
     "path": "tests/backup-scope.test.cjs",
