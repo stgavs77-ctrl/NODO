@@ -1,6 +1,6 @@
 import Foundation
 
-// Transactional NODO recovery, not a disaster-recovery snapshot of Efrecord.
+// Transactional NODO recovery, not a disaster-recovery snapshot of nodo-optional.
 // Keep exact bridge-owned state; never recursively select the shared plugin dir.
 let nodoBridgeBackupFiles = [
  "state.json", "state.json.bak", "chat-sessions.json", "send-ledger.jsonl",

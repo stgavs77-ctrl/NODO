@@ -365,7 +365,7 @@
   },
   {
     "path": "rescue/BackupScope.swift",
-    "sha256": "619215ad2ccd8892f5c573e2f273043c42f5d9bf54781c02812cee05d23f1572"
+    "sha256": "45884fea7e79cb7ac77898bc62fbfd83b29960280b31e760cc30e531c9581994"
   },
   {
     "path": "rescue/README.md",
@@ -393,7 +393,7 @@
   },
   {
     "path": "tests/backup-scope-fixture.swift",
-    "sha256": "ddc10a496197b11c426d2c6fffa19fa52c9da0b453a2184835ae9b043265705d"
+    "sha256": "94618b930022c7699729809eee038b468ca8aefecd6f4a689f9917ebbe240851"
   },
   {
     "path": "tests/backup-scope.test.cjs",
