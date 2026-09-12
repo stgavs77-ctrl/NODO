@@ -1,0 +1,11 @@
+{
+  "name": "nodo-remote-relay",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-09-12",
+  "workers_dev": true,
+  "preview_urls": false,
+  "assets": {"directory": "../../remote-web", "binding": "ASSETS", "run_worker_first": true},
+  "durable_objects": {"bindings": [{"name": "RELAY", "class_name": "RelayHub"}]},
+  "migrations": [{"tag": "v1", "new_sqlite_classes": ["RelayHub"]}],
+  "observability": {"enabled": false}
+}

@@ -1,0 +1,13 @@
+{
+  "name": "nodo-dev-remote-relay",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Development-only opaque relay; it is not a hosted service.",
+  "scripts": {
+    "test": "node --test test/relay.test.cjs",
+    "start": "node server.cjs"
+  },
+  "dependencies": {
+    "ws": "^8.18.3"
+  }
+}

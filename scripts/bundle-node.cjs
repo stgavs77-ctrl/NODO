@@ -1,0 +1,7 @@
+const fs=require('fs'),path=require('path'),{execFileSync:run}=require('child_process');
+const dest=path.resolve(__dirname,'../runtime'),libs=path.join(dest,'node-libs');fs.mkdirSync(libs,{recursive:true});
+const source=fs.realpathSync('/opt/homebrew/bin/node');const visited=new Map();
+function dependencies(f){return run('/usr/bin/otool',['-L',f],{encoding:'utf8'}).split('\n').slice(1).map(x=>x.trim().split(' (')[0]).filter(Boolean)}
+function resolve(dep,from){if(dep.startsWith('/opt/homebrew/'))return fs.realpathSync(dep);if(dep.startsWith('@rpath/libnode'))return fs.realpathSync(path.resolve(path.dirname(source),'../lib',path.basename(dep)));if(dep.startsWith('@rpath/'))return fs.realpathSync(path.join(path.dirname(from),path.basename(dep)));if(dep.startsWith('@loader_path/'))return fs.realpathSync(path.resolve(path.dirname(from),dep.slice(13)));return null}
+function copy(from,to){if(visited.has(from))return;visited.set(from,to);fs.copyFileSync(from,to);fs.chmodSync(to,0o755);for(const dep of dependencies(from)){const src=resolve(dep,from);if(!src)continue;const out=path.join(libs,path.basename(src));copy(src,out);const target=path.relative(path.dirname(to),out);run('/usr/bin/install_name_tool',['-change',dep,'@loader_path/'+target,to],{stdio:'pipe'});}run('/usr/bin/codesign',['--force','--sign','-',to],{stdio:'pipe'});}
+copy(source,path.join(dest,'node'));console.log('Bundled pinned Node 26.8.2 and '+(visited.size-1)+' local libraries');

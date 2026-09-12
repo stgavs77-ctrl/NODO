@@ -1,0 +1,22 @@
+{
+  "format": 1,
+  "base": "DSH 0.1.5-rc.1 after pinned UI patches",
+  "files": [
+    {
+      "file": "node_modules/@deepseek-ai/dsh-client-ui-sidebar/lib/client.js",
+      "sha256": "9c445f1f07b70b4b77422b3abd81b354110622fd53e9ede0a38dfbfdf5e52ae5"
+    },
+    {
+      "file": "node_modules/@deepseek-ai/dsh-client-ui-settings-models/lib/client.js",
+      "sha256": "4f0a2c1f74d5b80cbe2b1d8fcd67ea8ab0c79ff7ece578b841b16cc3c3ac1dcd"
+    },
+    {
+      "file": "node_modules/@deepseek-ai/dsh-client-ui-conversation/lib/client.js",
+      "sha256": "eda033e0bd9a46ee7271af191fa7a04c32662dd1ec30848dea4a6c7d2c0513ad"
+    },
+    {
+      "file": "node_modules/@deepseek-ai/dsh-web-frontend/dist/favicon.svg",
+      "sha256": "d6549b66c37b8ee8be3069ace2a3f214db90f39b26f4f65f87a41f046b1fe6c6"
+    }
+  ]
+}

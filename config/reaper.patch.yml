@@ -1,0 +1,14 @@
+# OPTIONAL, never loaded by isolated DEV. Enabling requires BOTH profile inclusion
+# and NODO_ENABLE_REAPER=1 outside isolation. No server is started by this file alone.
+- insert:
+    - id: nodo-reaper-mcp
+      name: '@deepseek-ai/dsh-mcp-client'
+      config:
+        transport: stdio
+        serverName: reaper
+        command: /Users/nodo/Desktop/reaper-mcp/.venv/bin/reaper-mcp
+        args: []
+        env:
+          REAPER_MCP_PROFILE: composition
+        toolCallTimeoutMs: 120000
+        failOnStartupError: true

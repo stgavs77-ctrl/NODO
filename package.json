@@ -1,0 +1,8 @@
+{
+  "name": "nodo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NODO local agent workspace for macOS",
+  "main": "main.cjs",
+  "scripts": { "bootstrap": "node scripts/bootstrap-runtime.cjs", "prepare-runtime": "node scripts/prepare-patches.cjs", "build:dev": "node scripts/build.cjs", "build:release": "node scripts/build.cjs --release", "release": "node scripts/release.cjs", "release:dev": "node scripts/release.cjs", "rescue": "node rescue/build.cjs" }
+}
