@@ -1,0 +1,19 @@
+const fs=require('node:fs'),path=require('node:path'),os=require('node:os'),cp=require('node:child_process'),assert=require('node:assert/strict'),crypto=require('node:crypto');
+const root=fs.mkdtempSync(path.join(os.tmpdir(),'nodo-rescue-test-')),release=path.join(root,'release'),target=path.join(root,'Applications/NODO.app'),data=path.join(root,'data'),old=path.join(root,'old/NODO.app');
+const bin=path.resolve(__dirname,'../build/NODO Rescue.app/Contents/MacOS/NODORescue');
+function put(p,text){fs.mkdirSync(path.dirname(p),{recursive:true});fs.writeFileSync(p,text);}
+put(path.join(old,'Contents/Resources/code'),'old');put(path.join(release,'NODO.app/Contents/Resources/code'),'new');put(path.join(data,'sessions/history'),'old history + new messages');put(path.join(data,'attachments/new'),'attachment');
+const hash=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+require('./rescue-fixture.cjs')(path.join(release,'NODO.app'));
+const cfg={testOnly:true,targetApp:target,dataPath:data,sourceApp:old,baseline:[{root:old,files:{'Contents/Resources/code':hash(path.join(old,'Contents/Resources/code'))}}]};put(path.join(release,'update.json'),JSON.stringify(cfg));
+const result=(...args)=>cp.spawnSync(bin,args,{encoding:'utf8'}),ok=(...args)=>{const r=result(...args);assert.equal(r.status,0,r.stderr);return r.stdout};
+const before=[hash(path.join(data,'sessions/history')),hash(path.join(data,'attachments/new'))];
+ok('install',release);assert.equal(fs.readFileSync(path.join(target,'Contents/Resources/code'),'utf8'),'new');put(path.join(data,'sessions/after-install'),'new live history');
+ok('rollback',path.join(root,'Applications/RescueState'));assert.equal(fs.readFileSync(path.join(target,'Contents/Resources/code'),'utf8'),'old');assert.equal(fs.readFileSync(path.join(data,'sessions/after-install'),'utf8'),'new live history');assert.deepEqual(before,[hash(path.join(data,'sessions/history')),hash(path.join(data,'attachments/new'))]);
+put(path.join(old,'Contents/Resources/code'),'changed after release');assert.notEqual(result('install',release).status,0,'baseline drift must reject');
+const d=JSON.parse(ok('diagnose',target,data));assert.equal(d.integrity,'failed','missing manifest startup failure detected');
+put(path.join(data,'dsh.log'),'customer-private-content synthetic-secret-token ECONNREFUSED');put(path.join(data,'startup-status.json'),JSON.stringify({state:'failed',error:'SyntaxError',private:'customer-private-content'}));const sanitized=ok('diagnose',target,data);assert(!sanitized.includes('customer-private-content'));assert(!sanitized.includes('synthetic-secret-token'));assert.equal(JSON.parse(sanitized).recentErrorCategories.econnrefused,1);assert.equal(JSON.parse(sanitized).startup.error,'SyntaxError');
+put(path.join(old,'Contents/Resources/code'),'old');put(path.join(data,'tasks.json'),JSON.stringify([{status:'Waiting'}]));const waiting=result('install',release);assert.notEqual(waiting.status,0);assert.match(waiting.stderr,/unfinished work/);put(path.join(data,'tasks.json'),'[]');
+put(path.join(release,'NODO.app/Contents/Resources/code'),'broken');const broken=JSON.parse(ok('diagnose',path.join(release,'NODO.app'),data));assert.equal(broken.integrity,'failed','tampered runtime detected');
+const crash=path.join(root,'crash/NODO.app');require('./rescue-fixture.cjs')(crash,23);const crashed=result('start',crash,path.join(root,'crash-data'));assert.notEqual(crashed.status,0);assert.match(crashed.stderr,/exited during startup \(code 23\)/);
+console.log(JSON.stringify({pass:true,checks:['synthetic install','code rollback','history and attachments preserved','post-update data preserved','source drift rejected','startup failure diagnosed','tampered code detected','real startup process exit 23 detected','Waiting task blocks update','diagnostic secret and message exclusion'],fixture:root},null,2));

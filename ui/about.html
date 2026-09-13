@@ -1,0 +1,9 @@
+<!doctype html><html><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'unsafe-inline'; script-src 'unsafe-inline'"><title>About NODO</title><style>body{background:#000;color:#fff;font:13px -apple-system,sans-serif;padding:24px;margin:0}img{display:block}p{margin:14px 0 0}.author{color:#fff}</style></head><body><img src="nodo-lockup.svg" width="148" height="24" alt="NODO HARNESS"><p id="version">Version 1.4.0</p><p class="author">Created by Stanislav Galitskiy</p><script>
+// The version comes from the running application metadata (main process reads
+// app.getVersion()), never from a value baked into this document.
+const el=document.getElementById('version');
+const render=info=>{const v=info&&(info.version||info.appVersion);el.textContent='Version '+(v||'unknown');return el.textContent;};
+if(window.nodoAbout&&typeof window.nodoAbout.info==='function'){
+ window.nodoAbout.info().then(info=>{render(info);document.title='About '+(info&&info.name||'NODO')+' '+((info&&info.version)||'');}).catch(()=>{el.textContent='Version unavailable';});
+}else el.textContent='Version unavailable';
+</script></body></html>

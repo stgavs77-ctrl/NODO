@@ -1,0 +1,35 @@
+# Isolated RC profile. Existing compaction switches preserved verbatim.
+# API economy stage 1 (2026-09-11): compaction starts at 30% of the context window
+# (300k of 1M) instead of the 80% default; verbatim tail is an absolute 80k
+# (retainTokens replaces retainRatio; the schema rejects both together).
+- id: ui-brand-official
+  disabled: true
+- id: compaction-basic
+  disabled: false
+  config:
+    thresholdRatio: 0.20
+    retainTokens: 50000
+- id: command-compact
+  disabled: false
+# API economy stage 1: warn earlier about repeated identical tool calls
+# (defaults were 3/5/8). Advisory only, the tool is never blocked.
+- id: repeat-tool-reminder
+  config:
+    thresholds: [2, 4, 6]
+    argumentsPreviewChars: 500
+- id: tool-skill
+  disabled: false
+- id: skill-filesystem
+  disabled: false
+# Выбор каталога для «Add workspace»: нативный диалог в NODO не открывается,
+# ставим браузерный пикер - те же строки, что в профиле production (12.09.2026).
+- id: directory-picker
+  name: '@deepseek-ai/dsh-host-directory-picker-auto'
+  disabled: true
+- insert:
+    - id: directory-picker-browse
+      name: '@deepseek-ai/dsh-host-directory-picker-browse'
+    - id: directory-picker-browse-ui
+      name: '@deepseek-ai/dsh-client-ui-directory-picker-browse'
+    - id: rc-workstation
+      name: 'deepseek-harness-rc-extension'

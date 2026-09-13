@@ -1,0 +1,20 @@
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),os=require('node:os'),path=require('node:path'),zlib=require('node:zlib');
+const {coldPreflight}=require('../lib/cold-preflight.cjs');
+test('closed-profile validation does not masquerade as running-runtime drain',()=>{
+ const temp=fs.mkdtempSync(path.join(os.tmpdir(),'nodo-cold-')),root=path.join(temp,'NODO'),bridge=path.join(temp,'bridge');
+ fs.mkdirSync(path.join(root,'dsh/sessions'),{recursive:true});fs.mkdirSync(bridge);
+ const put=(file,value)=>fs.writeFileSync(file,JSON.stringify(value));
+ put(path.join(root,'tasks.json'),[{status:'Done'}]);put(path.join(root,'workstation.json'),{});
+ for(const file of ['chat-sessions.json','allowed-chats.json','bridge-config.json'])put(path.join(bridge,file),{});
+ put(path.join(bridge,'state.json'),{pending:[],cursor:42});
+ fs.writeFileSync(path.join(bridge,'send-ledger.jsonl'),'\u007b"state":"unknown","key":"synthetic"}\n');
+ const history=path.join(root,'dsh/sessions/example.zstd');
+ const writeHistory=rows=>fs.writeFileSync(history,zlib.zstdCompressSync(Buffer.from(rows.map(JSON.stringify).join('\n')+'\n')));
+ writeHistory([{type:'turn/start'},{type:'turn/end'}]);
+ assert.equal(coldPreflight(root,bridge).mode,'closed-profile');
+ assert.match(fs.readFileSync(path.join(bridge,'send-ledger.jsonl'),'utf8'),/unknown/);
+ writeHistory([{type:'turn/start'}]);assert.throws(()=>coldPreflight(root,bridge),/unfinished/);
+ writeHistory([{type:'turn/end'}]);put(path.join(root,'tasks.json'),[{status:'Running'}]);assert.throws(()=>coldPreflight(root,bridge),/Tasks/);
+ put(path.join(root,'tasks.json'),[]);fs.writeFileSync(history,'truncated');assert.throws(()=>coldPreflight(root,bridge),/incomplete or unreadable/);
+ fs.rmSync(temp,{recursive:true,force:true});
+});
