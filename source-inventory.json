@@ -197,7 +197,7 @@
   },
   {
     "path": "lib/tasks.cjs",
-    "sha256": "483d872f293c34715c747ad813cafaafa96636b570038685446a9ad4ca31636b"
+    "sha256": "c8a93492495cbac759b363177b93a7f966a189d37b5a47234ad4b3a184846615"
   },
   {
     "path": "lib/telegram.cjs",
@@ -485,7 +485,7 @@
   },
   {
     "path": "tests/codex-input.test.cjs",
-    "sha256": "a90e4061b9f14204a2c09615dc62c3c0aa23989e5ccf87ee33c470fc26f52cd8"
+    "sha256": "15abf78bea7f30afc962ec54637cabaf86df80555e63972e8b0337bf7e1a81a4"
   },
   {
     "path": "tests/cold-preflight.test.cjs",
