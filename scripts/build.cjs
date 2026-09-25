@@ -8,7 +8,9 @@ run(process.execPath,[path.join(root,'scripts/brand-assets.cjs')],{stdio:'inheri
 fs.mkdirSync(path.dirname(out),{recursive:true});run('/bin/cp',['-cR',path.join(root,'vendor/Shell.app'),out]);
 const res=path.join(out,'Contents/Resources'),project=path.join(res,'project');fs.mkdirSync(project);
 for(const f of ['main.cjs','preload.cjs','about-preload.cjs','package.json','profile.patch.yml','codex-config.toml','dsh-plugin.mjs','lib','services','extension','ui','assets','patches','config','runtime'])run('/bin/cp',['-cR',path.join(root,f),path.join(project,f)]);
-fs.mkdirSync(path.join(project,'scripts'));for(const f of ['telegram-read.py','prepare-patches.cjs','outer-sandbox-runner.cjs','apply-branding.cjs','update-preflight.cjs','start-current-nodo.command','vk-factoscope-runner.sh'])fs.copyFileSync(path.join(root,'scripts',f),path.join(project,'scripts',f));
+fs.mkdirSync(path.join(project,'scripts'));for(const f of ['prepare-patches.cjs','outer-sandbox-runner.cjs','apply-branding.cjs','update-preflight.cjs'])fs.copyFileSync(path.join(root,'scripts',f),path.join(project,'scripts',f));
+// Personal helpers live only in the private tree; the public build ships without them.
+for(const f of ['telegram-read.py','start-current-nodo.command','vk-factoscope-runner.sh'])if(fs.existsSync(path.join(root,'scripts',f)))fs.copyFileSync(path.join(root,'scripts',f),path.join(project,'scripts',f));else console.log('build: optional private helper not in this tree: scripts/'+f);
 run(process.execPath,[path.join(root,'scripts/apply-branding.cjs'),project],{stdio:'inherit'});
 fs.symlinkSync('runtime/node_modules',path.join(project,'node_modules'));
 fs.writeFileSync(path.join(project,'build-mode.json'),JSON.stringify({mode}));

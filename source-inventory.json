@@ -369,7 +369,7 @@
   },
   {
     "path": "scripts/build.cjs",
-    "sha256": "ffb0a1fcea4d6ddbbbe8dc71680c6cccb8bfdf39ec02e36b22c9f81321531576"
+    "sha256": "8dd317cc4aca947e52cc73665d272cdf2b35afe0e0742f9769bfc0356a186aa7"
   },
   {
     "path": "scripts/bundle-node.cjs",
