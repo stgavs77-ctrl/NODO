@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "cat \"$CLAUDE_PROJECT_DIR/docs/project/STATE.md\" 2>/dev/null || true"
+          }
+        ]
+      }
+    ]
+  }
+}

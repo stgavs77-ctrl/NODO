@@ -27,7 +27,7 @@ test('updater quit records a distinct intentional-stop reason',async()=>{
 test('manual launch clears the intentional marker',()=>{
  const data=fs.mkdtempSync(path.join(os.tmpdir(),'nodo-quit-'));try{fs.mkdirSync(data,{recursive:true});fs.writeFileSync(markerPath(data),'{}');clearIntentionalStop(data);assert.equal(fs.existsSync(markerPath(data)),false);}finally{fs.rmSync(data,{recursive:true,force:true});}
 });
-test('watchdog launcher suppresses only an intentional user stop',()=>{
+test('watchdog launcher suppresses only an intentional user stop',{skip:fs.existsSync(path.resolve(__dirname,'../scripts/start-current-nodo.command'))&&fs.existsSync('/bin/zsh')?false:'start-current-nodo.command (private tree) or zsh unavailable'},()=>{
  const home=fs.mkdtempSync(path.join(os.tmpdir(),'nodo-launcher-')),marker=path.join(home,'Library/Application Support/NODO/intentional-stop.json');try{fs.mkdirSync(path.dirname(marker),{recursive:true});const run=reason=>{fs.writeFileSync(marker,JSON.stringify({intentional:true,reason}));return cp.spawnSync('/bin/zsh',[path.resolve(__dirname,'../scripts/start-current-nodo.command')],{env:{HOME:home,PATH:process.env.PATH},encoding:'utf8'});};assert.equal(run('user').status,0);assert.notEqual(run('updater').status,0);fs.rmSync(marker);assert.notEqual(cp.spawnSync('/bin/zsh',[path.resolve(__dirname,'../scripts/start-current-nodo.command')],{env:{HOME:home,PATH:process.env.PATH},encoding:'utf8'}).status,0);}finally{fs.rmSync(home,{recursive:true,force:true});}
 });
 test('native quit closes prompt admission before cancelling exact active sessions',async()=>{

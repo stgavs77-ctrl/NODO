@@ -1,7 +1,7 @@
 [
   {
     "path": "main.cjs",
-    "sha256": "f50a2a1503e539f476a9ea5b596eb33e6cc5b11f4ccf49ced6848551aa5c502b"
+    "sha256": "2473a76ef3a87b15c0881c0414d39e6695a0db98677c0087580ff85f74da4bc1"
   },
   {
     "path": "preload.cjs",
@@ -13,7 +13,7 @@
   },
   {
     "path": "package.json",
-    "sha256": "e9e1072ca83c5329596f1e21aab85dadd0c0eda9bb30d12c1d31d61e557a4582"
+    "sha256": "c4a7e6bff5b77811e36c42592a3e9d926f0fccff93cb25c42389bdfacd18a2e3"
   },
   {
     "path": "build-mode.json",
@@ -69,15 +69,15 @@
   },
   {
     "path": "lib/codex.cjs",
-    "sha256": "1163220ec1d73744705ec764fa969b8af9f38dbc512bfd56e1c3af9e62d3b722"
+    "sha256": "d865492b6c4a20642bbac4fd08ffa97e51b4a72cc48a4d4f63a7756d377e0e85"
   },
   {
     "path": "lib/cold-preflight.cjs",
-    "sha256": "353a3d18341416a20599ea7b6206d5fd75e3ee72d3d467b833b7ba6b86907b0f"
+    "sha256": "84c4970dfaf5f5f90ae10f78fe6a446796bc7ac49985ae68a54e233bc3ffc42f"
   },
   {
     "path": "lib/context-engine.cjs",
-    "sha256": "926ef5f74b33992e91b9990e7df5356d675ae9fcc9397de7466d046375e243bf"
+    "sha256": "32a88dd908361277a5d703bada1125a1650c8f0d33759e8a2d723623a3a59536"
   },
   {
     "path": "lib/context-modes.cjs",
@@ -101,7 +101,7 @@
   },
   {
     "path": "lib/github.cjs",
-    "sha256": "ac5d8dc112c599b22f1dcc8c848bf0b20d8297b7a30a0eada8136502f20a40fe"
+    "sha256": "1e0d0918fbea0734d62d6e1319e9a4a5f9cebb372d167fb07473689798fd12f4"
   },
   {
     "path": "lib/harness-guard.cjs",
@@ -137,7 +137,7 @@
   },
   {
     "path": "lib/project-runtime.cjs",
-    "sha256": "88b9c8bca0eb2b86cdd49322dfc04fda903986ab86c1896b9f56b6ad846cec4e"
+    "sha256": "7acae714f865a6f6d8b69a3ff363d1e294bfbc348983ae004634445133e800ff"
   },
   {
     "path": "lib/provider-usage-hook.cjs",
@@ -193,11 +193,11 @@
   },
   {
     "path": "lib/supervisor.cjs",
-    "sha256": "d4d1787166b70a8633675b97e2e03e1b9e965f06988609b396ba8d10d26f124d"
+    "sha256": "c8b28324fad89b3ea48d63d1b9a56a9ce2ffba8dfb91d29539150445844638b9"
   },
   {
     "path": "lib/tasks.cjs",
-    "sha256": "f3c708d3be39dd468422011a59d3931ae5b2b5121f7b1824a0d7dc3c8e2b17d5"
+    "sha256": "44561d99877d7fdfb9592b6aea2341c87ee310f4fb9cf55e9d44cbad59cedfca"
   },
   {
     "path": "lib/telegram.cjs",
@@ -249,7 +249,7 @@
   },
   {
     "path": "ui/loading.js",
-    "sha256": "187a0abdfa068aeb8c193db673bd0862e33f0c6ec67faa7f437119546821d022"
+    "sha256": "cfba495c71770a0256e7eeac15d2d816655dfdeefac281720703a2b10e513c0d"
   },
   {
     "path": "ui/nodo-lockup.svg",
@@ -421,7 +421,7 @@
   },
   {
     "path": "scripts/update-preflight.cjs",
-    "sha256": "3e80671d151578e90c02adad555e0b5ac58f9de83458e6ef64d07c8567410974"
+    "sha256": "a9f26bd6181dd5c2de366644a0ca93f37b577ca08c0ac6717b7feed3136caca5"
   },
   {
     "path": "rescue/BackupScope.swift",
@@ -485,11 +485,11 @@
   },
   {
     "path": "tests/codex-input.test.cjs",
-    "sha256": "5b786b5b43658d4004d66f75ad8574830355a2c1ae261a3a3a263ae58c9e61e3"
+    "sha256": "0e2e438978c2e9741405c36cc5404035fc5b0f4dc170e8766d522666f32f2533"
   },
   {
     "path": "tests/cold-preflight.test.cjs",
-    "sha256": "9d88af3c102ef735a127e08ff51a1fc650cca6c82e26105d09efee7de3d15056"
+    "sha256": "6de8d35205af1e7f32d0d4508bae7ad818b914f3f577d27731971bb70c51f94c"
   },
   {
     "path": "tests/context-modes.test.cjs",
@@ -557,7 +557,7 @@
   },
   {
     "path": "tests/quit-control.test.cjs",
-    "sha256": "fb25ab391a2a2fa89cc0090a54c3f6f3df714cb9cb117e57b8de05fe3dc3e678"
+    "sha256": "6a085ccf067ee2e76129e30b4da32411f01e862d55d1cbce5b4b57fa3344a465"
   },
   {
     "path": "tests/quit-electron-lifecycle.test.cjs",
@@ -649,11 +649,11 @@
   },
   {
     "path": "tests/services-lifecycle.test.cjs",
-    "sha256": "11a9441d30a1ded5cdf0d382bcf630b5eb387deaeb2de8c729d049f3491acfe0"
+    "sha256": "c16a3aa26307b58cf4cb37e1b552aef41f5f28046b4960a5679c4302a7cb3b31"
   },
   {
     "path": "tests/supervisor.test.cjs",
-    "sha256": "84bb69afff8ab2469cd5100cd13e502f2d63f5fb3b0d6ae19aa46c44d020b86a"
+    "sha256": "83f56b427de49cb27d8bafc67eda0c2d5f9f38414aeb189df15cb2e84a5aa38a"
   },
   {
     "path": "tests/tools-patches.test.cjs",
@@ -769,6 +769,14 @@
   },
   {
     "path": "config/release-notes.md",
-    "sha256": "431bfb47f809a179d6f968079b269f12a85eecde387124a5aba8df8e9ee15514"
+    "sha256": "b7c1fdb867f51b9646ba50e98c4c6d9d1b9c0c60b1f07da92a0749647fad23a4"
+  },
+  {
+    "path": "services/lifecycle-gate.cjs",
+    "sha256": "5e3327cf164c135f08e53fc249ee75f17f7678b5a3593a1edc435c647d756985"
+  },
+  {
+    "path": "scripts/source-inventory.cjs",
+    "sha256": "a3319d58b67decc649a2b3c003c64b8060383e00bd112dbf1a76a0e333493e86"
   }
 ]

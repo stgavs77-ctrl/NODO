@@ -169,3 +169,14 @@ test('I. acceptance met stops optional extra audits',async()=>{
  assert.match(extra.denied||'',/optional extra tests or audits/i);
  assert.equal(h.state().intervention.code,'success-stop');
 });
+
+test('user message classifier handles Cyrillic word boundaries and URL query strings', () => {
+  const { classifyUserMessage } = require('../lib/supervisor.cjs');
+  assert.equal(classifyUserMessage('что делаешь'), 'question');
+  assert.equal(classifyUserMessage('какой статус'), 'question');
+  assert.equal(classifyUserMessage('как дела?'), 'question');
+  assert.equal(classifyUserMessage('каталог почисти'), 'action');
+  assert.equal(classifyUserMessage('что-то сломалось, почини'), 'action');
+  assert.equal(classifyUserMessage('открой https://example.com/page?id=1 и проверь'), 'action');
+  assert.equal(classifyUserMessage('whatever, just do it'), 'action');
+});

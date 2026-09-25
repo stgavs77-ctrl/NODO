@@ -15,6 +15,7 @@ test('closed-profile validation does not masquerade as running-runtime drain',()
  assert.match(fs.readFileSync(path.join(bridge,'send-ledger.jsonl'),'utf8'),/unknown/);
  writeHistory([{type:'turn/start'}]);assert.throws(()=>coldPreflight(root,bridge),/unfinished/);
  writeHistory([{type:'turn/end'}]);put(path.join(root,'tasks.json'),[{status:'Running'}]);assert.throws(()=>coldPreflight(root,bridge),/Tasks/);
+ put(path.join(root,'tasks.json'),[{status:'Paused'},{status:'Cancelled'}]);assert.equal(coldPreflight(root,bridge).mode,'closed-profile');
  put(path.join(root,'tasks.json'),[]);fs.writeFileSync(history,'truncated');assert.throws(()=>coldPreflight(root,bridge),/incomplete or unreadable/);
  fs.rmSync(temp,{recursive:true,force:true});
 });

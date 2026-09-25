@@ -11,6 +11,9 @@
     "build:release": "node scripts/build.cjs --release",
     "release": "node scripts/release.cjs",
     "release:dev": "node scripts/release.cjs",
-    "rescue": "node rescue/build.cjs"
+    "rescue": "node rescue/build.cjs",
+    "test": "node --test tests/*.test.cjs",
+    "inventory": "node scripts/source-inventory.cjs",
+    "inventory:check": "node scripts/source-inventory.cjs --check"
   }
 }

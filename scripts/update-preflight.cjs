@@ -43,7 +43,7 @@ async function run(mode){
  if(mode==='quit')return endpoint('lifecycle.quit');
  if(mode==='resume')return endpoint('lifecycle.resume');
  if(mode==='snapshot')return snapshot();
- if(mode==='health'){const s=await endpoint('lifecycle.status');const bad=[];if(!s.dshReady)bad.push('DSH');if(!s.codexReady)bad.push('Codex');for(const name of ['nodo-tools',...s.services.filter(x=>['telegram-bridge','sessions-observer'].includes(x.name)).map(x=>x.name)]){const v=s.services.find(x=>x.name===name);if(!v||v.missing||v.paused)bad.push(name);}if(bad.length)throw Error('Services failed to start: '+bad.join(', '));return {ready:true,snapshot:snapshot()};}
+ if(mode==='health'){const s=await endpoint('lifecycle.status');const bad=[];if(!s.dshReady)bad.push('DSH');for(const name of ['nodo-tools',...s.services.filter(x=>['telegram-bridge','sessions-observer'].includes(x.name)).map(x=>x.name)]){const v=s.services.find(x=>x.name===name);if(!v||v.missing||v.paused)bad.push(name);}if(bad.length)throw Error('Services failed to start: '+bad.join(', '));return {ready:true,codexReady:!!s.codexReady,...s.codexReady?{}:{warnings:['Codex runtime not ready (optional)']},snapshot:snapshot()};}
  throw Error('Unknown preflight mode');
 }
 module.exports={snapshot,compare,foreignJobs};

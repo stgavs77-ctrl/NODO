@@ -15,7 +15,8 @@ test('flush failure fails closed, retry does not repeat old work',async()=>{
  await g.run(()=>{calls++;});await assert.rejects(g.pause(),/disk/);assert.equal(g.status().drained,false);
  fail=false;assert.equal((await g.pause()).drained,true);assert.equal(calls,1);
 });
-test('packaged bridge and observer mock contexts pause with durable files; startup sentinel untouched',async()=>{
+const privateServices=['telegram-bridge-live.mjs','sessions-observer.mjs'].every(f=>fs.existsSync(path.join(__dirname,'../services',f)));
+test('packaged bridge and observer mock contexts pause with durable files; startup sentinel untouched',{skip:privateServices?false:'private bridge/observer services are not part of the public tree'},async()=>{
  const root=fs.mkdtempSync(path.join(os.tmpdir(),'nodo-services-'));
  const old=globalThis[symbol];globalThis[symbol]=new Map();const cleanup=[];
  const ctx={effect:f=>cleanup.push(f()),logger:{info(){},warn(){}},tools:{register(){}},sessions:{get(){}},typert:{lookups:new Map()}};
