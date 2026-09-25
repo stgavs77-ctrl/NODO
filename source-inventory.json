@@ -85,7 +85,7 @@
   },
   {
     "path": "lib/cost-meter.cjs",
-    "sha256": "6bd1f2c3efeeedafdab66bf4734268586f4b405de865c7e80542c98c4884216b"
+    "sha256": "bab5ac70adb3f7dba786167fc5cb77eeffb7ae574c744621a06de6458947b814"
   },
   {
     "path": "lib/current-state.cjs",
@@ -221,7 +221,7 @@
   },
   {
     "path": "lib/usage.cjs",
-    "sha256": "99cc701301326dd913cb03f47bf905e55746f4f60d8f44a520b29b6d2c86ad96"
+    "sha256": "27f4a4823d8b6e99a0bc0ebaf81608e4b68583e947009adc6eb1d9f399458d4e"
   },
   {
     "path": "lib/welcome-notice.cjs",
@@ -497,7 +497,7 @@
   },
   {
     "path": "tests/cost-meter.test.cjs",
-    "sha256": "b6b682b949074eb2efb9f83b9af04e34cd848fb29ac8de3bf15240d63737b080"
+    "sha256": "8192bdb4ed93eb29b4cd83104c52c514276ed0f1f99ca667e6a9b9ff715465e5"
   },
   {
     "path": "tests/create-feature-fixtures.cjs",

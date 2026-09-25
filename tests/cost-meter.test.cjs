@@ -3,14 +3,15 @@ const {UsageLedger}=require('../lib/usage.cjs');const {save}=require('../lib/io.
 // 2026-09-14 is a Monday, 2026-09-19 a Saturday; instants are built explicitly in UTC.
 const utc=(day,hour)=>Date.UTC(2026,8,day,hour,0,0);
 const WEEKDAY_PEAK=utc(14,2),WEEKDAY_OFF=utc(14,12),SATURDAY_PEAK_HOUR=utc(19,2);
-const NOW=Date.now();
+// A fixed weekday off-peak instant keeps every assertion independent of the wall clock.
+const NOW=WEEKDAY_OFF;
 // Local midnight, so rows recorded during this test stay inside today's window.
 const dayStart=stamp=>{const d=new Date(stamp);d.setHours(0,0,0,0);return d.getTime();};
 const M=tokens=>({cached:0,input:0,cacheWrite:0,output:0,reasoning:0,total:0,...tokens});
 const event=(seq,turn,step,usage)=>({seq,turn,type:'assistant/message',data:{turn,step,usage}});
 function fixture(events){
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'nodo-cost-meter-'));
- const ledger=new UsageLedger(dir),meter=new CostMeter({usage:ledger,now:NOW});
+ const ledger=new UsageLedger(dir,{now:()=>NOW}),meter=new CostMeter({usage:ledger,now:NOW});
  for(const [sessionId,list] of Object.entries(events))ledger.recordDeepSeek(sessionId,list);
  return{dir,ledger,meter};
 }
@@ -82,7 +83,7 @@ test('turn, session and project aggregate provider tokens while keeping money no
  assert.equal(meter.project({model:'gpt-5-codex'}).cost.value,null);
 });
 test('Codex usage is reported separately and never priced by the DeepSeek table',()=>{
- const dir=fs.mkdtempSync(path.join(os.tmpdir(),'nodo-cost-meter-codex-'));const ledger=new UsageLedger(dir);
+ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'nodo-cost-meter-codex-'));const ledger=new UsageLedger(dir,{now:()=>NOW});
  ledger.recordCodex({threadId:'t',tokenUsage:{total:{inputTokens:100,cachedInputTokens:40,outputTokens:20,totalTokens:120}}});
  const meter=new CostMeter({usage:ledger,now:NOW});
  const session=meter.session('t');
@@ -92,9 +93,9 @@ test('Codex usage is reported separately and never priced by the DeepSeek table'
  const project=meter.project();
  assert.equal(project.usage,null);assert.equal(project.codex.total,120);assert.equal(project.cacheHitRate,null);
  assert.equal(project.cost.value,null);assert.equal(project.cost.unavailableReason,'no provider usage observed');
- assert.equal(project.today.codex,null);assert.equal(project.today.usage,null);assert.equal(project.today.cost,null);
- // Codex rows carry no `at` stamp, so they surface as undated instead of today's spend.
- assert.equal(project.today.undated,1);
+ assert.equal(project.today.codex.total,120);assert.equal(project.today.usage,null);assert.equal(project.today.cost,null);
+ // Codex rows are stamped when first observed, so they count in today's usage, not as undated.
+ assert.equal(project.today.undated,0);
  assert.equal(project.startsAt,null);
 });
 test('Real ledger events feed turnStats, dailyStats and the meter with undated rows surfaced',()=>{
@@ -124,4 +125,17 @@ test('A persisted row without a timestamp is surfaced as undated instead of sile
  const meter=new CostMeter({usage:fresh,now:NOW});
  assert.equal(meter.turn('s',1).usage.steps,1);assert.equal(meter.turn('s',1).cost.value,0.000005);
  assert.equal(meter.project().today.undated,1);assert.equal(meter.project().startsAt,null);assert.equal(meter.project().usage.cached,30);
+});
+test('Each ledger row is priced with the tariff in force when it was recorded',()=>{
+ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'nodo-cost-tier-'));let clock=WEEKDAY_PEAK;
+ const ledger=new UsageLedger(dir,{now:()=>clock});
+ ledger.recordDeepSeek('s',[event(1,1,1,{inputTokens:1000000,outputTokens:0,totalTokens:1000000})]);
+ clock=WEEKDAY_OFF;ledger.recordDeepSeek('s',[event(2,1,2,{inputTokens:1000000,outputTokens:0,totalTokens:1000000})]);
+ const at=now=>new CostMeter({usage:ledger,now});
+ // One million cache-miss tokens at peak (0.30) plus one million off-peak (0.15), whenever it is read.
+ for(const now of [WEEKDAY_PEAK,WEEKDAY_OFF,SATURDAY_PEAK_HOUR]){const m=at(now);assert.equal(m.session('s').cost.value,0.45);assert.equal(m.turn('s',1).cost.value,0.45);assert.equal(m.session('s').cost.tier,'mixed');}
+ const today=at(WEEKDAY_OFF+3600000).project().today;assert.equal(today.usage.input,2000000);assert.equal(today.cost.value,0.45);
+ ledger.recordCodex({threadId:'t',tokenUsage:{total:{inputTokens:5,outputTokens:1,totalTokens:6}}});
+ assert.equal(ledger.rows['codex:t'].at,WEEKDAY_OFF);assert.equal(ledger.dailyStats(dayStart(WEEKDAY_OFF)).Codex.total,6);
+ fs.rmSync(dir,{recursive:true,force:true});
 });
