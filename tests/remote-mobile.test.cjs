@@ -1,3 +1,5 @@
+// remote-relay/ is not part of the public tree; skip explicitly instead of crashing on require.
+if(!require('node:fs').existsSync(require('node:path').join(__dirname,'../remote-relay/server.cjs'))){require('node:test')('remote mobile relay suite',{skip:'remote-relay/ is not in this tree'},()=>{});return;}
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),os=require('node:os'),cp=require('node:child_process'),https=require('node:https');
 const {chromium}=require('../runtime/playwright/node_modules/playwright');
 const WS=require('../runtime/node_modules/ws');

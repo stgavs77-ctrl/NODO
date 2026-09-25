@@ -18,11 +18,16 @@ func checkScope(_ value:Bool,_ message:String)throws{if !value{throw ScopeTestEr
   let allExcluded=excluded+[profile+"/updates/install-test/installer.log"]
   for file in allExcluded{try put(file,Data("SYNTHETIC_EXCLUDED".utf8))}
   let scope=try nodoBackupScope(data:data,userHome:home)
-  try checkScope(scope.contains(data.appendingPathComponent("dsh")),"selected profile data absent")
-  try checkScope(scope.contains(data.appendingPathComponent("future-persistent.json")),"unknown persistent file absent")
+  // Compare normalized paths: newer Foundation returns directory URLs with a trailing
+  // slash and may resolve /var to /private/var, so URL equality is not reliable.
+  func norm(_ u:URL)->String{u.standardizedFileURL.resolvingSymlinksInPath().path}
+  let scopePaths=Set(scope.map(norm))
+  func selected(_ u:URL)->Bool{scopePaths.contains(norm(u))}
+  try checkScope(selected(data.appendingPathComponent("dsh")),"selected profile data absent")
+  try checkScope(selected(data.appendingPathComponent("future-persistent.json")),"unknown persistent file absent")
   try checkScope(scope.count==2+nodoBridgeBackupFiles.count+3,"scope cardinality")
-  for file in nodoBridgeBackupFiles{try checkScope(scope.contains(home.appendingPathComponent(bridge+file)),"critical state absent")}
-  for file in allExcluded{let p=home.appendingPathComponent(file).path;try checkScope(!scope.contains{p==$0.path||p.hasPrefix($0.path+"/")},"excluded file selected")}
+  for file in nodoBridgeBackupFiles{try checkScope(selected(home.appendingPathComponent(bridge+file)),"critical state absent")}
+  for file in allExcluded{let p=norm(home.appendingPathComponent(file));try checkScope(!scopePaths.contains{p==$0||p.hasPrefix($0+"/")},"excluded file selected")}
 
   // Keep independent example-local and watch diagnostics changing during encryption.
   let queue=DispatchQueue(label:"synthetic-excluded-writers"),timer=DispatchSource.makeTimerSource(queue:queue)

@@ -1,4 +1,6 @@
 'use strict';
+// Needs remote-relay/cloudflare (not in the public tree) and the miniflare package.
+{let ready=require('node:fs').existsSync(require('node:path').join(__dirname,'../remote-relay/cloudflare'));try{require.resolve(process.env.NODO_MINIFLARE_MODULE||'miniflare');}catch{ready=false;}if(!ready){require('node:test')('remote cloudflare relay suite',{skip:'remote-relay/cloudflare or miniflare unavailable'},()=>{});return;}}
 const test=require('node:test'),assert=require('node:assert/strict'),path=require('node:path'),crypto=require('node:crypto');
 const {Miniflare,convertV4MiniflareOptions}=require(process.env.NODO_MINIFLARE_MODULE || 'miniflare');
 const root=path.resolve(__dirname,'..');

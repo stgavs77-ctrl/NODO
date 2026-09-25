@@ -1,4 +1,6 @@
 'use strict';
+// remote-relay/ is not part of the public tree; skip explicitly instead of crashing on require.
+if(!require('node:fs').existsSync(require('node:path').join(__dirname,'../remote-relay/server.cjs'))){require('node:test')('remote relay host suite',{skip:'remote-relay/ is not in this tree'},()=>{});return;}
 const assert=require('node:assert/strict');
 const test=require('node:test');
 const Ws=require('../runtime/node_modules/ws');

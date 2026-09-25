@@ -4,7 +4,8 @@ const project=path.resolve(__dirname,'..');
 const hash=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
 function put(file,value){fs.mkdirSync(path.dirname(file),{recursive:true});fs.writeFileSync(file,typeof value==='string'||Buffer.isBuffer(value)?value:JSON.stringify(value));}
 function inventory(root,ignored=[]){const files={},symlinks={};function walk(dir){for(const name of fs.readdirSync(dir)){const file=path.join(dir,name),rel=path.relative(root,file);if(ignored.some(x=>rel===x||rel.startsWith(x+'/')))continue;const s=fs.lstatSync(file);if(s.isSymbolicLink())symlinks[rel]=fs.readlinkSync(file);else if(s.isDirectory())walk(file);else files[rel]=hash(file);}}walk(root);return{files,symlinks,ignored};}
-test('cold full installer encrypts, starts, validates, migrates watchdog, and rolls back code preserving new chats',{timeout:180000},async()=>{
+const privateHelpers=['scripts/start-current-nodo.command','scripts/vk-factoscope-runner.sh'].every(f=>fs.existsSync(path.join(project,f)));
+test('cold full installer encrypts, starts, validates, migrates watchdog, and rolls back code preserving new chats',{timeout:180000,skip:privateHelpers?false:'watchdog helpers from the private tree are not present'},async()=>{
  const root=fs.mkdtempSync('/private/tmp/nodo-e2e-'),home=path.join(root,'h'),data=path.join(home,'Library/Application Support/NODO'),bridge=path.join(home,'.dsh/plugins/telegram-bridge'),target=path.join(home,'Applications/NODO.app'),release=path.join(root,'release'),base=path.join(home,'Library/Application Support/NODO Rescue');
  const env={...process.env,HOME:home,NODO_TEST_HOME:home,NODE_OPTIONS:'--require '+path.join(__dirname,'updater-launchctl-preload.cjs')};
  let ownedPID=null;

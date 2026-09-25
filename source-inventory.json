@@ -1,7 +1,7 @@
 [
   {
     "path": "main.cjs",
-    "sha256": "2473a76ef3a87b15c0881c0414d39e6695a0db98677c0087580ff85f74da4bc1"
+    "sha256": "603df69e07ac161f38684ac3a86ee3a1131d9cac6c29ad327f5dab99682b5091"
   },
   {
     "path": "preload.cjs",
@@ -197,7 +197,7 @@
   },
   {
     "path": "lib/tasks.cjs",
-    "sha256": "63fc8331e70b4cd4d765cd91379e6cf5731231a0479310d15511de002dc8e03c"
+    "sha256": "483d872f293c34715c747ad813cafaafa96636b570038685446a9ad4ca31636b"
   },
   {
     "path": "lib/telegram.cjs",
@@ -461,7 +461,7 @@
   },
   {
     "path": "tests/backup-scope-fixture.swift",
-    "sha256": "8a86fe8bb2aa21b464b1308cff6bbfa1cfd98e008bff3c91fc23c1cfac4d2731"
+    "sha256": "550a25e6b3aa0e4158ab46a442527ef42fce18734137af28d69d3b94feddd60c"
   },
   {
     "path": "tests/backup-scope.test.cjs",
@@ -485,7 +485,7 @@
   },
   {
     "path": "tests/codex-input.test.cjs",
-    "sha256": "0e2e438978c2e9741405c36cc5404035fc5b0f4dc170e8766d522666f32f2533"
+    "sha256": "a90e4061b9f14204a2c09615dc62c3c0aa23989e5ccf87ee33c470fc26f52cd8"
   },
   {
     "path": "tests/cold-preflight.test.cjs",
@@ -585,7 +585,7 @@
   },
   {
     "path": "tests/remote-cloudflare.test.cjs",
-    "sha256": "0ad5d07dc5e5410380809f2d2820edb22ebbd5a649d5863aa9f00257328cfc8d"
+    "sha256": "0e274bb64ab5450328114335376b2085fee41761a0eaa4a5b594826cffa3f2cc"
   },
   {
     "path": "tests/remote-interactions.test.cjs",
@@ -597,7 +597,7 @@
   },
   {
     "path": "tests/remote-mobile.test.cjs",
-    "sha256": "dec76708adbc6647a456dbbef0a129ba100056716defdc3ba6404e50726993f2"
+    "sha256": "6a2c54ea2bde9633e4455f912c7628d773870d23b51239e7e096a7fd24fe24a2"
   },
   {
     "path": "tests/remote-pairing.test.cjs",
@@ -605,7 +605,7 @@
   },
   {
     "path": "tests/remote-relay-host.test.cjs",
-    "sha256": "7d1435abfed1e8d4f2287949bb3f0431535761453e9a3bf880d7653e03563934"
+    "sha256": "61f2f65c9355a98eb11f37a60906f379627609a6cee4de6711151f5d69b5a4b2"
   },
   {
     "path": "tests/remote-view.test.cjs",
@@ -661,7 +661,7 @@
   },
   {
     "path": "tests/updater-cold-integration.test.cjs",
-    "sha256": "86012b948d4963015cdf9a2f6d69a3c7fd045e5357eeaaeed13551db271b4a67"
+    "sha256": "3f753454f6dabf0bcc2db3b9ac1a9e908bcf3c4dbc50262914c28d40aa9b0811"
   },
   {
     "path": "tests/updater-fixture-main.c",

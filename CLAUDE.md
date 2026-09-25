@@ -38,8 +38,8 @@ AI-агентов. Основная модель — **DeepSeek** (runtime DeepS
 | `patches/`, `scripts/prepare-patches.cjs` | Точные по хэшу патчи DSH `0.1.5-rc.1` |
 | `runtime-seed/`, `tools-seed/` | Закреплённые зависимости runtime (ставятся `npm run bootstrap`) |
 
-Приватные части, которых **нет** в публичном репозитории: `services/telegram-bridge-live.mjs`,
-`services/sessions-observer.mjs`, `scripts/start-current-nodo.command`, `scripts/export-public.cjs`,
+Приватные части, которых **нет** в публичном репозитории: `remote-relay/` (relay для Remote),
+`services/telegram-bridge-live.mjs`, `services/sessions-observer.mjs`, `scripts/start-current-nodo.command`, `scripts/export-public.cjs`,
 `~/.dsh/plugins/telegram-bridge`. Не пытайся их выдумать; тесты, которым они нужны, пропускаются.
 
 ## Команды
@@ -50,10 +50,12 @@ npm run inventory        # пересчитать source-inventory.json посл
 npm run bootstrap        # только macOS arm64: runtime/, vendor/ (сеть, pinned-зависимости)
 npm run build:dev        # build/NODO DEV.app с изолированным профилем
 ```
-Ожидаемые падения на Linux/без runtime (не баги кода): тесты, которым нужен `runtime/node_modules`
-(dev-isolation, feature-settings, remote-relay-host, remote-mobile, optional-services, tools-patches),
-Swift/macOS (backup-scope, quit-electron-lifecycle, updater-cold-integration), `miniflare`
-(remote-cloudflare). Три теста cost-meter зависят от времени суток — это известный баг (ROADMAP, этап 1).
+**CI:** `.github/workflows/ci.yml` на macOS arm64 (GitHub Actions) выполняет bootstrap, `build:dev`
+и все тесты на каждый push в `main` и `claude/**`. Результат проверяй через GitHub MCP
+(`actions_list` / `get_job_logs`). Владелец не программист: всё, что можно проверить, проверяй сам через CI.
+Тесты, которым нужны отсутствующие в публичном дереве части (`remote-relay/`, приватные скрипты и сервисы,
+`miniflare`), пропускаются с указанием причины. На Linux дополнительно падают тесты, которым нужен
+`runtime/node_modules` или Swift/macOS. Это ожидаемо, эталон — зелёный CI на Mac.
 Перед коммитом сравнивай список падений до/после своих правок — новых быть не должно.
 
 ## Стиль кода
