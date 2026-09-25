@@ -180,3 +180,14 @@ test('user message classifier handles Cyrillic word boundaries and URL query str
   assert.equal(classifyUserMessage('открой https://example.com/page?id=1 и проверь'), 'action');
   assert.equal(classifyUserMessage('whatever, just do it'), 'action');
 });
+
+test('a hung tool cannot keep an intervened turn alive forever',async()=>{
+ const h=harness();
+ h.start();
+ // An operation that never settles stays in flight while the loop is detected.
+ void h.run('bash',{command:'node scripts/hang.cjs'},new Promise(()=>{}));
+ for(let i=0;i<6;i++)await h.run('bash',VERIFY,fail(1,'Cannot find module tests/slow.test.cjs'));
+ assert.equal(h.state().phase,'intervened');assert.equal(h.cancelled.length,0);
+ await new Promise(r=>setTimeout(r,20*8));
+ assert.deepEqual(h.cancelled,['s1']);
+});

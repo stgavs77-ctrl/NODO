@@ -34,3 +34,11 @@ test('packaged bridge and observer mock contexts pause with durable files; start
   assert(Array.isArray(JSON.parse(fs.readFileSync(path.join(root,'observer/board.json'))).sessions));
  }finally{await Promise.all(cleanup.map(f=>f()));globalThis[symbol]=old;fs.rmSync(root,{recursive:true,force:true});}
 });
+test('a failed lifecycle pause reopens prompt admission instead of wedging NODO',async()=>{
+ const {lifecycleControl}=require('../lib/lifecycle-control.cjs');
+ const old=globalThis[symbol];globalThis[symbol]=new Map();const prev=process.env.NODO_OPTIONAL_SERVICES;process.env.NODO_OPTIONAL_SERVICES='["telegram-bridge"]';
+ const commands={prompt(){return 'accepted';}};const ctx={agents:{list:()=>[]},sessionController:{commands,cancel:async()=>{}}};
+ const control=lifecycleControl(ctx,false);
+ try{await assert.rejects(control.pause(),/Lifecycle services missing: telegram-bridge/);assert.equal(control.paused,false);assert.equal(commands.prompt(),'accepted');}
+ finally{control.dispose();globalThis[symbol]=old;if(prev===undefined)delete process.env.NODO_OPTIONAL_SERVICES;else process.env.NODO_OPTIONAL_SERVICES=prev;}
+});

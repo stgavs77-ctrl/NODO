@@ -65,7 +65,7 @@
   },
   {
     "path": "lib/checkpoints.cjs",
-    "sha256": "ee13e7e2437ea5a6a5ed12d38bfbc11c06a94ca62e1d36a21b944236a9e259bb"
+    "sha256": "c917ae1d5fc6336d9e79426601dc7aca764049fda790938ab97c8332026b736e"
   },
   {
     "path": "lib/codex.cjs",
@@ -117,11 +117,11 @@
   },
   {
     "path": "lib/io.cjs",
-    "sha256": "fe84a171b99369320c189fa0351c96dd22e4164ed4fa598c8cbdcce66610d1d2"
+    "sha256": "a6bc94212a36c03116ac728c626fdd214e1e3c03187116ec6c4ab51563a9f0cb"
   },
   {
     "path": "lib/lifecycle-control.cjs",
-    "sha256": "2274316ad4d3fc571bcfa506708d3c60d6f49463607b09859551c1a87ce047d4"
+    "sha256": "e2765fbfa9d855e062bc8b7e55538eabec6e16d2312d54da4b65cf37d0c39183"
   },
   {
     "path": "lib/links.cjs",
@@ -193,11 +193,11 @@
   },
   {
     "path": "lib/supervisor.cjs",
-    "sha256": "c8b28324fad89b3ea48d63d1b9a56a9ce2ffba8dfb91d29539150445844638b9"
+    "sha256": "83a868bf930d38f247ef82408a4228d176fe8c8f242322cb187cf5506f1a356a"
   },
   {
     "path": "lib/tasks.cjs",
-    "sha256": "44561d99877d7fdfb9592b6aea2341c87ee310f4fb9cf55e9d44cbad59cedfca"
+    "sha256": "63fc8331e70b4cd4d765cd91379e6cf5731231a0479310d15511de002dc8e03c"
   },
   {
     "path": "lib/telegram.cjs",
@@ -649,11 +649,11 @@
   },
   {
     "path": "tests/services-lifecycle.test.cjs",
-    "sha256": "c16a3aa26307b58cf4cb37e1b552aef41f5f28046b4960a5679c4302a7cb3b31"
+    "sha256": "aa30d0171daf01fce037985e55d57cc75b60548d13a2a28574b3a003f9dc6104"
   },
   {
     "path": "tests/supervisor.test.cjs",
-    "sha256": "83f56b427de49cb27d8bafc67eda0c2d5f9f38414aeb189df15cb2e84a5aa38a"
+    "sha256": "95688541089596698fff5e2a4f629dcef7e653f69e5dc38fcbb9f167aa8e2b71"
   },
   {
     "path": "tests/tools-patches.test.cjs",
@@ -778,5 +778,9 @@
   {
     "path": "scripts/source-inventory.cjs",
     "sha256": "a3319d58b67decc649a2b3c003c64b8060383e00bd112dbf1a76a0e333493e86"
+  },
+  {
+    "path": "tests/io.test.cjs",
+    "sha256": "bf01b4fa66b9dda89ae2a257837ace964e5f7d5eefddd312497b4b3708d5faa4"
   }
 ]
