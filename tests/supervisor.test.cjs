@@ -188,6 +188,7 @@ test('a hung tool cannot keep an intervened turn alive forever',async()=>{
  void h.run('bash',{command:'node scripts/hang.cjs'},new Promise(()=>{}));
  for(let i=0;i<6;i++)await h.run('bash',VERIFY,fail(1,'Cannot find module tests/slow.test.cjs'));
  assert.equal(h.state().phase,'intervened');assert.equal(h.cancelled.length,0);
- await new Promise(r=>setTimeout(r,20*8));
+ // Five grace periods of 20 ms; poll so a slow CI runner does not flake.
+ for(const until=Date.now()+2000;!h.cancelled.length&&Date.now()<until;)await new Promise(r=>setTimeout(r,20));
  assert.deepEqual(h.cancelled,['s1']);
 });

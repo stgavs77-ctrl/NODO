@@ -653,7 +653,7 @@
   },
   {
     "path": "tests/supervisor.test.cjs",
-    "sha256": "95688541089596698fff5e2a4f629dcef7e653f69e5dc38fcbb9f167aa8e2b71"
+    "sha256": "1c4eea49750129816378eacc5fb95f026993352da0677be815d943ae4ad8f73b"
   },
   {
     "path": "tests/tools-patches.test.cjs",
