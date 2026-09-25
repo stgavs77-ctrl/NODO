@@ -102,3 +102,8 @@
 - Роутер усилия выключен по умолчанию в `NODO-private` (решение владельца 25.09): включается только
   `"effortRouter": true` в `economy-flags.json` профиля. Тест `tests/effort-router-default.test.cjs`.
   Проверено в DEV: многошаговая задача, уровень всё время `high`, кэш после первого шага 96-99%.
+- **25.09 12:48 рабочий NODO обновлён до 1.4.40** (по согласию владельца, после перезагрузки Mac) - сборка
+  `build:release` из `NODO-private` (коммит `19341ef`), установлена переключателем владельца
+  `~/NODO/scripts/nodo-switch.cjs install`: остановка, установка рядом, ready проверен. Откат: `nodo-switch.cjs
+  rollback` (1.4.39 лежит в `~/Applications/NODO-versions/1.4.39`). Codex отложен до прямого поручения владельца.
+- Помощники для DEV (CDP-скрипт, VPN-прокси) теперь в `~/Projects/nodo-devtools/` (scratchpad стирается перезагрузкой).
