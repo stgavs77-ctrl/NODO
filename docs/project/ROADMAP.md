@@ -17,7 +17,8 @@
 - [x] Иконка Dock (`icon_512x512@2x.png`) и репозиторий обновлений `stgavs77-ctrl/NODO`
 - [x] Экран загрузки показывает ошибку старта вместо вечного «Starting NODO…»
 - [x] `npm test`, `npm run inventory[:check]`, `CLAUDE.md`/`AGENTS.md`, память проекта в `docs/project/`
-- [ ] Проверить на реальном Mac: `npm run bootstrap && npm run build:dev`, запуск, задача DeepSeek и Codex
+- [x] На реальном Mac: `bootstrap`, `build:dev`, запуск NODO DEV - работают (2026-09-25)
+- [ ] Живая задача DeepSeek (сеть: api.deepseek.com недоступен через VPN) и Codex (владелец пока не вошёл в ChatGPT)
 
 ## Этап 1 — стабильность (следующий)
 - [x] cost-meter: каждая запись по тарифу своего момента (`costRows`), записи Codex со временем,
