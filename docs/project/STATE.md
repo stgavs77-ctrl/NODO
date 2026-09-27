@@ -533,3 +533,5 @@
   (теперь как Telegram: проверка клиента + пульс + коуч, бэкап wa-bridge.py.bak-20260927-pulse), Telegram-мост через
   `lib/client-check.cjs` (1.4.82, тест, 377/0/6). Правило «сначала пульс» в AGENTS NODO (63,2 КБ из 64 - запас 2,3 КБ!)
   и README секретаря. Сборка 1.4.82 в `~/Projects/NODO-releases/1.4.82`, установка - при тишине.
+- **27.09 14:00 1.4.82 установлена** (переключатель, ready). Добавлено разрешение в ~/.claude/settings.json: Claude сам
+  ставит/откатывает NODO только через `nodo-switch.cjs install|rollback` (бэкап settings.json.bak-20260927).
