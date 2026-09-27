@@ -535,3 +535,9 @@
   и README секретаря. Сборка 1.4.82 в `~/Projects/NODO-releases/1.4.82`, установка - при тишине.
 - **27.09 14:00 1.4.82 установлена** (переключатель, ready). Добавлено разрешение в ~/.claude/settings.json: Claude сам
   ставит/откатывает NODO только через `nodo-switch.cjs install|rollback` (бэкап settings.json.bak-20260927).
+- **27.09 14:20 правила NODO разгружены: 63,2 -> 41,6 КБ.** Ситуационное дословно вынесено в
+  `NODO/dsh/rules/` (system-work, products, client-tools, client-card, dossier, secretary, client-session-swap), в
+  AGENTS - указатели «когда X - прочитай файл» + раздел «Правила по случаю»; заглушка «Досье проекта» оставлена
+  (на неё ссылается lib/project-runtime.cjs). Проверка: каждый вынесенный кусок есть в файле. Бэкап
+  AGENTS.md.bak-20260927-split. Находка: lib/environment.cjs ставит агенту maxBytes 262144 оверлеем - лимит 64 КБ,
+  возможно, уже не действует; сессии за сутки уведомлений об обрезке не содержат.
